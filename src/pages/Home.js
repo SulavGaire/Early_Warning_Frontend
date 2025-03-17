@@ -31,9 +31,9 @@ const Home = () => {
       icon: floodIcon, // Icon for Flood
     },
     {
-      title: "Bridge Condition",
-      description: "Check the condition of nearby bridges regularly.",
-      link: "/bridge-condition",
+      title: "Forest Fire",
+      description: "Check the status for forest fire regularly.",
+      link: "/wildfire",
       icon: bridgeIcon, // Icon for Bridge Condition
     },
   ];

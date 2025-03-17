@@ -36,14 +36,14 @@ const Bridge = () => {
           {/* Left Side - Project Introduction */}
           <Box flex={1} mr={{ base: 0, md: 8 }} mb={{ base: 8, md: 0 }}>
             <Text fontSize="2xl" fontWeight="bold" mb={4}>
-              Bridge Safety Warning System
+              Forest Fire Early Warning System
             </Text>
             <Text fontSize="lg" mb={4}>
-              The Bridge Safety Warning System is a project designed to alert
-              communities and authorities of potential hazards of bridge
-              collapse. It combines hardware sensors with a web-based monitoring
-              system to provide real-time data on environmental conditions,
-              allowing for timely warnings and interventions.
+              The Flood Early Warning System is a project designed to alert
+              communities and authorities of potential hazards of flood. It
+              combines hardware sensors with a web-based monitoring system to
+              provide real-time data on environmental conditions, allowing for
+              timely warnings and interventions.
             </Text>
             <Text fontSize="lg" mb={4}>
               This system is designed with efficiency and accuracy in mind,
@@ -53,9 +53,9 @@ const Bridge = () => {
             </Text>
 
             {/* View Dashboard Button */}
-            <Link to="/flood/dashboard">
+            <Link to="/wildfire/map">
               <Button colorScheme="blue" mt={4}>
-                View Dashboard
+                View Map
               </Button>
             </Link>
           </Box>
