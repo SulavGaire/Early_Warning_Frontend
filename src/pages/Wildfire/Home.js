@@ -3,7 +3,7 @@ import { Box, Flex, Image, Text, Spinner, Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom"; // Import Link for routing
 import image from "../../assets/bridgewarning.png"; // Replace with actual image path
 
-const Bridge = () => {
+const Wildfire = () => {
   const [loading, setLoading] = useState(true);
 
   // Simulate loading with a timeout
@@ -77,4 +77,4 @@ const Bridge = () => {
   );
 };
 
-export default Bridge;
+export default Wildfire;
