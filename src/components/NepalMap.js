@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  GeoJSON,
+  useMap,
+} from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import fireImg from "../assets/fire.png";
@@ -20,36 +27,55 @@ const fireIcon = new L.Icon({
   popupAnchor: [0, -30],
 });
 
+// Function to style the GeoJSON layer
+const geoJsonStyle = {
+  fillColor: "transparent",
+  color: "red",
+  weight: 2,
+  opacity: 1,
+};
+
 // MapHandler to ensure map refreshes when data updates
 const MapHandler = () => {
   const map = useMap();
   useEffect(() => {
-    map.invalidateSize(); // This ensures the map adjusts when new markers are added
+    map.invalidateSize(); // Ensure map adjusts when new markers are added
   }, [map]);
   return null;
 };
 
 const NepalMap = () => {
   const [sensors, setSensors] = useState([]);
+  const [geojsonData, setGeojsonData] = useState(null);
 
   useEffect(() => {
     const fetchSensorData = async () => {
       try {
-        // Fetch data from the API
         const response = await fetch(
           "https://dummyjson.com/c/a285-3e5a-46f0-b5a0"
         );
         const data = await response.json();
-        setSensors(data); // Set the sensors array to the data from the API
+        setSensors(data);
       } catch (error) {
         console.error("Error fetching sensor data:", error);
       }
     };
 
-    fetchSensorData(); // Fetch data initially
-    const interval = setInterval(fetchSensorData, 5000); // Fetch data every 5 seconds
+    const fetchGeoJson = async () => {
+      try {
+        const response = await fetch("/nepal.geojson"); // Adjust path if necessary
+        const data = await response.json();
+        setGeojsonData(data);
+      } catch (error) {
+        console.error("Error loading GeoJSON:", error);
+      }
+    };
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
+    fetchSensorData();
+    fetchGeoJson();
+
+    const interval = setInterval(fetchSensorData, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -62,8 +88,8 @@ const NepalMap = () => {
       }}
     >
       <MapContainer
-        center={[27.7172, 85.324]} // Initial center of the map (Kathmandu)
-        zoom={10} // Default zoom level
+        center={[27.7172, 85.324]}
+        zoom={6.5}
         style={{ height: "100%", width: "100%" }}
       >
         <MapHandler />
@@ -71,6 +97,9 @@ const NepalMap = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
+
+        {/* Render GeoJSON Border Overlay */}
+        {geojsonData && <GeoJSON data={geojsonData} style={geoJsonStyle} />}
 
         {/* Render markers dynamically based on the sensors data */}
         {sensors.map((sensor) => (
